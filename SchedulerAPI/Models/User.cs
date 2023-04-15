@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
-namespace SchedulerAPI.Models;
+namespace ProjectManagerAPI.Models;
 
 public partial class User
 {
@@ -21,6 +22,7 @@ public partial class User
 
     public int? Roleid { get; set; }
 
+    [JsonIgnore]
     public virtual ICollection<Plannedlaborcost> Plannedlaborcosts { get; set; } = new List<Plannedlaborcost>();
 
     public virtual ICollection<PostDynamic> PostDynamics { get; set; } = new List<PostDynamic>();

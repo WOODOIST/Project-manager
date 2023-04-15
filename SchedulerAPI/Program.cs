@@ -1,6 +1,5 @@
 global using Microsoft.EntityFrameworkCore;
-
-using SchedulerAPI.Models;
+using ProjectManagerAPI.Models;
 
 
 
@@ -13,6 +12,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<SchedulerContext>();
+
 
 var app = builder.Build();
 

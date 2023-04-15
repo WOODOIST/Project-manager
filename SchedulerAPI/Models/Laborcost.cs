@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SchedulerAPI.Models;
+namespace ProjectManagerAPI.Models;
 
 public partial class Laborcost
 {
