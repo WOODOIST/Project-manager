@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using ProjectManagerAPI.DtoObjects;
 using ProjectManagerAPI.Models;
 
 namespace SchedulerAPI.Controllers
@@ -7,18 +9,25 @@ namespace SchedulerAPI.Controllers
     [ApiController]
     public class RoleController : ControllerBase
     {
-        private readonly SchedulerContext _context;
 
-        public RoleController(SchedulerContext context)
+
+        private readonly SchedulerContext _context;
+        private readonly IMapper _mapper;
+
+        
+
+
+
+        public RoleController(SchedulerContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
 
         //GET запросы
         [HttpGet("~/GetOneRole")]
 
-        
         public async Task<ActionResult<List<Role>>> GetOneRole(int roleId)
         {
             return Ok(await _context.Roles.Where
@@ -27,8 +36,18 @@ namespace SchedulerAPI.Controllers
             
         }
 
-        [HttpGet("~/GetRoles")]
-        public async Task<ActionResult<List<Role>>> GetRoles()
+
+        //Применён автомаппер, чтобы не показывать id у ролей 
+        [HttpGet("~/GetRolesWithoutId")]
+        public  ActionResult<List<Role>> GetRolesWithoutId()
+        { 
+
+            return Ok( _context.Roles.Select(role => _mapper.Map<RoleDto>(role)));
+        }
+
+
+        [HttpGet("~/GetRolesWithId")]
+        public async Task< ActionResult<List<Role>>> GetRolesWithId()
         {
             return Ok(await _context.Roles.
                 ToListAsync());
@@ -74,6 +93,7 @@ namespace SchedulerAPI.Controllers
 
         //PUT запросы
         [HttpPut("~/PutRole")]
+
         public async Task<ActionResult<List<Role>>> EditRole(Role request)
         {
             var role = await _context.Roles.FindAsync(request.Roleid);
