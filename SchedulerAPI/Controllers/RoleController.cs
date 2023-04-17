@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using ProjectManagerAPI.DtoObjects.Incoming;
@@ -8,6 +9,7 @@ using ProjectManagerAPI.Models;
 namespace SchedulerAPI.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class RoleController : ControllerBase
     {

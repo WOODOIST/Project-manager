@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace ProjectManagerAPI.Models;
@@ -37,9 +38,11 @@ public partial class SchedulerContext : DbContext
     {
         if (!optionsBuilder.IsConfigured)
         {
-
+            
         }
     }
+
+    
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
