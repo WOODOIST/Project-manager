@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using ProjectManagerAPI.DtoObjects;
+using ProjectManagerAPI.DtoObjects.Incoming;
+using ProjectManagerAPI.DtoObjects.Outgoing;
 using ProjectManagerAPI.Models;
 
 namespace SchedulerAPI.Controllers
@@ -25,29 +27,35 @@ namespace SchedulerAPI.Controllers
         }
 
 
+
+
+
         //GET запросы
         [HttpGet("~/GetOneRole")]
 
-        public async Task<ActionResult<List<Role>>> GetOneRole(int roleId)
+        public async Task<IActionResult> GetOneRole(int roleId)
         {
-            return Ok(await _context.Roles.Where
-                (p => p.Roleid == roleId).ToListAsync());
 
-            
+            var role = await _context.Roles.FirstOrDefaultAsync(p=>p.Roleid == roleId);
+            if (role == null)
+                return BadRequest("Id не существует");
+            return Ok(role);
         }
 
 
         //Применён автомаппер, чтобы не показывать id у ролей 
         [HttpGet("~/GetRolesWithoutId")]
-        public  ActionResult<List<Role>> GetRolesWithoutId()
-        { 
+        public    ActionResult<List<Role>>  GetRolesWithoutId()
+        {
+            var allRoles = _context.Roles.Select(role => _mapper.Map<RoleDto>(role));
+            var _roles = _mapper.Map<IEnumerable<RoleDto>>(allRoles);
 
-            return Ok( _context.Roles.Select(role => _mapper.Map<RoleDto>(role)));
+            return Ok(_roles); 
         }
 
 
         [HttpGet("~/GetRolesWithId")]
-        public async Task< ActionResult<List<Role>>> GetRolesWithId()
+        public async Task<IActionResult> GetRolesWithId()
         {
             return Ok(await _context.Roles.
                 ToListAsync());
@@ -59,50 +67,58 @@ namespace SchedulerAPI.Controllers
         //POST Запросы
         [HttpPost("~/PostRole")]
 
-        public async Task<ActionResult<List<Role>>> CreateOneRole(Role role)
+        public async  Task<IActionResult> CreateOneRole(RoleForCreationDto data)
         {
-            var newRole = new Role
-            {
-                Rolename = role.Rolename
+                var _role =  _mapper.Map<Role>(data);    
 
 
-
-            };
-
-            _context.Roles.Add(newRole);
-            await _context.SaveChangesAsync();
-
-
-            return await GetOneRole(newRole.Roleid);
-
+                try
+                {
+                  await _context.Roles.AddAsync(_role);
+                  await  _context.SaveChangesAsync(); 
+                  return  CreatedAtAction("GetOneRole", routeValues: new { _role.Roleid }, value: _role);
+                }
+                catch
+                {
+                return  new JsonResult("Что-то пошло не так. Возможно, вы ввели уже существующую роль") { StatusCode = 500 } ;
+                }
 
         }
+
+
 
         //DELETE запросы
         [HttpDelete("~/DeleteRole")]
 
-        public async Task<ActionResult<List<Role>>> DeleteOneRole(Role request)
+        public async Task<IActionResult> DeleteRole(int roleId)
         {
-            _context.Roles.Remove(request);
+            var role = await _context.Roles.FirstOrDefaultAsync
+                (p => p.Roleid == roleId);
+
+            if (role == null)
+                return BadRequest("Id не существует.");
+
+             _context.Roles.Remove(role);
             await _context.SaveChangesAsync();
 
-            return await GetOneRole(request.Roleid);
+            return BadRequest($"Роль {role} удалена!");
         }
 
 
 
         //PUT запросы
-        [HttpPut("~/PutRole")]
+        [HttpPatch("~/EditRole")]
 
-        public async Task<ActionResult<List<Role>>> EditRole(Role request)
+        public async Task<ActionResult> EditRole(string oldrolename, string newrolename)
         {
-            var role = await _context.Roles.FindAsync(request.Roleid);
+            var role = _context.Roles.FirstOrDefault(p => p.Rolename == oldrolename);
             if (role == null)
-                return BadRequest("Role not found! :(");
-                
-            role.Rolename = request.Rolename;
+                return BadRequest("Указанной роли не существует.");
+
+            role.Rolename = newrolename;
+
             await _context.SaveChangesAsync();
-            return Ok(_context.Roles);
+            return Ok(role);
         }
     }
 }
