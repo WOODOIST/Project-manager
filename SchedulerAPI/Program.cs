@@ -11,7 +11,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<SchedulerContext>(options=>options.UseNpgsql(builder.Configuration.GetConnectionString("constring_remote")));
+builder.Services.AddDbContext<SchedulerContext>(options=>options.UseNpgsql(builder.Configuration.GetConnectionString("constring_render")));
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
 
