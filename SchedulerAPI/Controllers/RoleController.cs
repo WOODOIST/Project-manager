@@ -90,18 +90,18 @@ namespace SchedulerAPI.Controllers
         //DELETE запросы
         [HttpDelete("~/DeleteRole")]
 
-        public async Task<IActionResult> DeleteRole(int roleId)
+        public async Task<IActionResult> DeleteRole(string rolename)
         {
             var role = await _context.Roles.FirstOrDefaultAsync
-                (p => p.Roleid == roleId);
+                (p => p.Rolename == rolename);
 
             if (role == null)
-                return BadRequest("Id не существует.");
+                return BadRequest("Введённой роли не существует.");
 
              _context.Roles.Remove(role);
             await _context.SaveChangesAsync();
 
-            return BadRequest($"Роль {role} удалена!");
+            return BadRequest($"Роль {role.Rolename} удалена!");
         }
 
 
