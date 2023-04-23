@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace ProjectManagerAPI.Models;
@@ -20,12 +21,17 @@ public partial class User
 
     public string? Useremail { get; set; }
 
-    public int? Roleid { get; set; }
+    public int Roleid { get; set; }
+
+    [ForeignKey("Roleid")]
+    public  Role Role { get; set; }
 
     [JsonIgnore]
     public virtual ICollection<Plannedlaborcost> Plannedlaborcosts { get; set; } = new List<Plannedlaborcost>();
 
+    [JsonIgnore]
     public virtual ICollection<PostDynamic> PostDynamics { get; set; } = new List<PostDynamic>();
+    
 
-    public virtual Role? Role { get; set; }
+    
 }

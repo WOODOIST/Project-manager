@@ -1,4 +1,6 @@
-﻿namespace ProjectManagerAPI.DtoObjects.Incoming
+﻿using System.Xml.Serialization;
+
+namespace ProjectManagerAPI.DtoObjects.Incoming
 {
     public class AuthUserDto
     {

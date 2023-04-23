@@ -10,11 +10,8 @@ namespace ProjectManagerAPI.AutoMappers
     {
         public AuthProfile()
         {
-            CreateMap<AuthUserDto, User>()
-                .ForMember(destinationMember: dest => dest.Userlogin,
-                memberOptions: opt => opt.MapFrom(src => src.Login))
-                .ForMember(destinationMember: dest=> dest.Userpassword,
-                memberOptions:opt => opt.MapFrom(src=>src.Password));
+            CreateMap<AuthUserDto, User>();
+               
         }
     }
 }

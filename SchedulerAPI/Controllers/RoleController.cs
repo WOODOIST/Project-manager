@@ -9,7 +9,7 @@ using ProjectManagerAPI.Models;
 namespace SchedulerAPI.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize]
+    //[Authorize]
     [ApiController]
     public class RoleController : ControllerBase
     {
@@ -49,7 +49,8 @@ namespace SchedulerAPI.Controllers
         [HttpGet("~/GetRolesWithoutId")]
         public    ActionResult<List<Role>>  GetRolesWithoutId()
         {
-            var allRoles = _context.Roles.Select(role => _mapper.Map<RoleDto>(role));
+            var allRoles = _context.Roles.Select(role => 
+            _mapper.Map<RoleDto>(role));
             var _roles = _mapper.Map<IEnumerable<RoleDto>>(allRoles);
 
             return Ok(_roles); 

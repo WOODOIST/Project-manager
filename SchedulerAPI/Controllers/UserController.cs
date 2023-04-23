@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using ProjectManagerAPI.DtoObjects.Outgoing;
 using ProjectManagerAPI.Models;
 
 namespace SchedulerAPI.Controllers
@@ -8,17 +10,28 @@ namespace SchedulerAPI.Controllers
     public class UserController : ControllerBase
     {
         private readonly SchedulerContext _context;
+        private readonly IMapper _mapper;
 
-        public UserController(SchedulerContext context)
+        public UserController(SchedulerContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
-        [HttpGet]
-        public async Task<IActionResult> GetUsers()
+
+        //GET запросы
+        [HttpGet("~/GetAllUsers")]
+        public async  Task<IActionResult> GetUsers()
         {
-            return Ok(await _context.Users.
-                Include(p=>p.Role).ToListAsync());
-                
+            var allUsersAsync = await _context.Users.Include(i=>i.Role).ToListAsync();
+
+            var allUsers = allUsersAsync.Select(user =>
+            _mapper.Map<UserDto>(user));
+            var _users = _mapper.Map<IEnumerable<UserDto>>(allUsers);
+
+            return Ok(_users);
+
+
+
         }
 
     }
