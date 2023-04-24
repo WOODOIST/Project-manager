@@ -1,4 +1,5 @@
 ﻿using ProjectManagerAPI.Models;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ProjectManagerAPI.DtoObjects.Outgoing
 {
@@ -12,7 +13,11 @@ namespace ProjectManagerAPI.DtoObjects.Outgoing
 
         public string UserEmail { get; set; } = null!;
 
-        public string RoleName { get; set; }
+        public int Roleid { get; set; }
+
+        public string Rolename { get; set; }
+
+
 
 
     }

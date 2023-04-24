@@ -83,7 +83,8 @@ namespace SchedulerAPI.Controllers
                 }
                 catch
                 {
-                return  new JsonResult("Что-то пошло не так. Возможно, вы ввели уже существующую роль") { StatusCode = 500 } ;
+                return  new JsonResult("Что-то пошло не так. Возможно, вы ввели уже существующую роль")
+                { StatusCode = 500 } ;
                 }
 
         }
