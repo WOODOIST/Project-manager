@@ -4,6 +4,7 @@ using ProjectManagerAPI.Models;
 
 namespace ProjectManagerAPI.Controllers
 {
+    [HiddenInput]
     [Route("api/[controller]")]
     [ApiController]
     public class UserControllerRepo : Controller

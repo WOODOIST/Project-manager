@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace ProjectManagerAPI.Models;
 
@@ -13,7 +14,9 @@ public partial class PostDynamic
 
     public int Postid { get; set; }
 
+    [JsonIgnore]
     public virtual Post Post { get; set; } = null!;
+    [JsonIgnore]
 
     public virtual User User { get; set; } = null!;
 }

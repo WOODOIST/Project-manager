@@ -37,9 +37,9 @@ namespace ProjectManagerAPI.Controllers
             var _authUser = _mapper.Map<User>(_userData);
             if (_userData != null)
             {
-                var resultLoginCheck =  _context.Users.Where(
+                var resultLoginCheck = await  _context.Users.Where(
                     p => p.Userlogin == _userData.Login && 
-                    p.Userpassword == _userData.Password ).FirstOrDefault();
+                    p.Userpassword == _userData.Password ).FirstOrDefaultAsync();
 
                 if (resultLoginCheck == null)
                 {

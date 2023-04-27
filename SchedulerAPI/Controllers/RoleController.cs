@@ -33,7 +33,7 @@ namespace SchedulerAPI.Controllers
 
 
         //GET запросы
-        [HttpGet("~/GetOneRole")]
+        [HttpGet("~/GetRoleByName")]
 
         public async Task<IActionResult> GetOneRole(string rolename)
         {

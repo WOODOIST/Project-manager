@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace ProjectManagerAPI.Models;
 
@@ -12,6 +13,7 @@ public partial class Project
     public DateOnly Projectcreationdate { get; set; }
 
     public DateOnly? Projectfinishdate { get; set; }
+    [JsonIgnore]
 
     public virtual ICollection<Plannedlaborcost> Plannedlaborcosts { get; set; } = new List<Plannedlaborcost>();
 }

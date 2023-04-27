@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using ProjectManagerAPI.DtoObjects.Incoming;
 using ProjectManagerAPI.DtoObjects.Outgoing;
 using ProjectManagerAPI.Models;
+using System.Xml.Xsl;
 
 namespace SchedulerAPI.Controllers
 {
@@ -38,7 +39,8 @@ namespace SchedulerAPI.Controllers
         [HttpGet("~/GetAllUsersWithId")]
         public async Task<IActionResult> GetUsersWithId()
         {
-            var allUsersAsync = await _context.Users.Include(i => i.Role).ToListAsync();
+            var allUsersAsync = await _context.Users.Include(i => i.Role).
+                ToListAsync();
 
            
 
@@ -49,23 +51,19 @@ namespace SchedulerAPI.Controllers
         }
 
         [HttpGet("~/GetOneUser")]
-        public async Task<UserDto> GetOneUser(int userId) 
+        public async Task<ActionResult<UserDto>> GetOneUser(int userId) 
         {
             var allUsersAsync = await _context.Users.Include(i => i.Role).ToListAsync();
 
            
             var user = await _context.Users.FindAsync(userId);
+
+            if (user == null)
+                return BadRequest("Пользователь не найден. Убедитесь, что id корректный.");
+            
             return _mapper.Map<UserDto>(user);
 
-            //var userNoMap = await _context.Users.FirstOrDefaultAsync(p => p.Usersurname == usersurname 
-            //&& p.Username == username);
-
-
-            //if (userNoMap == null)
-            //    return BadRequest("Указанного пользователя не существует.");
-           
-
-            //return (IActionResult)_mapper.Map<UserDto>(userNoMap);
+            
         }
 
         //POST запросы
@@ -78,7 +76,7 @@ namespace SchedulerAPI.Controllers
             {
                 await _context.Users.AddAsync(_user);
                 await _context.SaveChangesAsync();
-                return new JsonResult($"Пользователь добавлен успешно!. Его id  = {_user.Userid}  ");
+                return new JsonResult($"  Пользователь добавлен успешно!. Его id  = {_user.Userid}  ");
             }
             catch
             {

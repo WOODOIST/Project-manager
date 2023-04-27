@@ -24,6 +24,7 @@ public partial class User
     public int Roleid { get; set; }
 
     [ForeignKey("Roleid")]
+    [JsonIgnore]
     public  Role Role { get; set; }
 
     [JsonIgnore]
