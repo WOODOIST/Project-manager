@@ -1,0 +1,75 @@
+﻿@model IEnumerable<ProjectManagerAPI.Models.User>
+
+@{
+    ViewData["Title"] = "GetUsers";
+}
+
+<h1>GetUsers</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            
+            <th>
+                @Html.DisplayNameFor(model => model.Usersurname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Username)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Userpatronymic)
+            </th>
+            
+            <th>
+                @Html.DisplayNameFor(model => model.Useremail)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Role )
+            </th>
+
+            
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            
+            <td>
+                @Html.DisplayFor(modelItem => item.Usersurname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Username)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Userpatronymic)
+            </td>
+            
+            <td>
+                @Html.DisplayFor(modelItem => item.Useremail)
+            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Role.Rolename)
+                </td>
+            
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<div class="text-center">
+    <form method="post" asp-controller="User" asp-action="ExportToCSV">
+        <input type="submit" value="Экспорт в CSV файл"/>
+    </form>
+    <br />
+    <form method="post" asp-controller="User" asp-action="ExportToExcel">
+        <input type="submit" value="Экспорт в Excel файл" />
+    </form>
+</div>

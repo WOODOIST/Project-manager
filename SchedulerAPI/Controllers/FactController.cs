@@ -68,7 +68,7 @@ namespace ProjectManagerAPI.Controllers
         //POST Запросы
         [HttpPost("~/PostFact")]
 
-        public async Task<IActionResult> PostFact(FactForCreationDto data)
+        public async Task<IActionResult> PostFact( FactForCreationDto data)
         {
             var _fact = _mapper.Map<Fact>(data);
 
@@ -77,7 +77,7 @@ namespace ProjectManagerAPI.Controllers
             {
                 await _context.Facts.AddAsync(_fact);
                 await _context.SaveChangesAsync();
-                return CreatedAtAction("GetFactByName", routeValues: new { _fact.Factname }, value: _fact);
+                return Ok(await _context.Facts.FirstOrDefaultAsync(p=>p.Factname == _fact.Factname));
             }
             catch
             {

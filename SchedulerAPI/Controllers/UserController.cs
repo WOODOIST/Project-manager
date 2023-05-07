@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.StaticFiles;
 using ProjectManagerAPI.DtoObjects.Incoming;
 using ProjectManagerAPI.DtoObjects.Outgoing;
 using ProjectManagerAPI.Models;
@@ -125,6 +126,9 @@ namespace SchedulerAPI.Controllers
             await _context.SaveChangesAsync();
             return Ok(user);
         }
+
+
+        
 
     }
 }

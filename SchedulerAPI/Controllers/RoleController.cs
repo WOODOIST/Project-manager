@@ -33,12 +33,12 @@ namespace SchedulerAPI.Controllers
 
 
         //GET запросы
-        [HttpGet("~/GetRoleByName")]
+        [HttpGet("~/GetRole/{id}")]
 
-        public async Task<IActionResult> GetOneRole(string rolename)
+        public async Task<IActionResult> GetOneRole(int id)
         {
 
-            var role = await _context.Roles.FirstOrDefaultAsync(p=>p.Rolename == rolename);
+            var role = await _context.Roles.FirstOrDefaultAsync(p=>p.Roleid == id);
             if (role == null)
                 return BadRequest("Указанной роли не существует");
             return Ok(role);

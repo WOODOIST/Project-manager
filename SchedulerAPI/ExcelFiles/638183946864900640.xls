@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    
+
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+    </style>
+</head>
+<body>
+    <table style="width:100%;">
+        <thead>
+            <tr style="font-weight:bold">
+                <td>Фамилия</td>
+                <td>Имя</td>
+                <td>Отчество</td>
+                <td>Почта</td>
+                <td>Код роли</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>Иванов</td><td>Иван</td><td>Иванович</td><td>ivanov@mail.ru</td><td>1</td></tr><tr><td>Петров</td><td>Андрей</td><td>Дмитриевич</td><td>petrov@mail.ru</td><td>2</td></tr><tr><td>Семенов</td><td>Андрей</td><td>Борисович</td><td>igah@mail.ru</td><td>1</td></tr><tr><td>fa</td><td>af</td><td>hgfhfgb</td><td>hyryf</td><td>1</td></tr><tr><td>2</td><td>2</td><td>4</td><td>hrthrtht</td><td>2</td></tr><tr><td>gff</td><td>fhff</td><td>dfdty</td><td>fghfyutyjf</td><td>1</td></tr><tr><td>Иванов</td><td>Иван</td><td>лфп</td><td>hjgfgbf</td><td>1</td></tr>
+        </tbody>
+    </table>
+</body>
+</html>
